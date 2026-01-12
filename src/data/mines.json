@@ -1,0 +1,39 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kvanefjeld",
+                "resource": "Rare Earth Elements / Uranium",
+                "owner": "Greenland Minerals / Shenghe Resources",
+                "status": "Contested",
+                "description": "One of the world's largest undevelopd deposits of REE and Uranium."
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -46.0,
+                    60.98
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tanbreez",
+                "resource": "Rare Earth Elements (Heavy)",
+                "owner": "Tanbreez Mining Greenland",
+                "status": "Active Interest",
+                "description": "Critical heavy REM deposit, strategically significant for non-Chinese supply chains."
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -45.8,
+                    60.85
+                ]
+            }
+        }
+    ]
+}

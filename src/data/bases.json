@@ -1,0 +1,56 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Pituffik Space Base",
+                "country": "USA",
+                "type": "Space Force Base",
+                "radius_km": 50,
+                "description": "Key early warning radar and satellite tracking station."
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.7,
+                    76.53
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Nagurskoye (Arctic Trefoil)",
+                "country": "Russia",
+                "type": "Air Base",
+                "radius_km": 100,
+                "description": "Russia's northernmost military base, capable of hosting strategic bombers."
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    47.5,
+                    80.8
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Rogachevo Air Base",
+                "country": "Russia",
+                "type": "Air Base",
+                "radius_km": 80,
+                "description": "Strategic interceptor base on Novaya Zemlya."
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    52.48,
+                    71.61
+                ]
+            }
+        }
+    ]
+}

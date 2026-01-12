@@ -1,0 +1,641 @@
+[
+    {
+        "country": "Canada",
+        "facility_name": "Yellowknife (JTFN Headquarters)",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Joint Task Force North (JTFN) Headquarters",
+        "latitude": 62.4540,
+        "longitude": -114.3718
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Whitehorse (JTFN Detachment)",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "JTFN Detachment",
+        "latitude": 60.7212,
+        "longitude": -135.0568
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Inuvik",
+        "domain": "Air",
+        "material": "Fighter aircraft",
+        "information": "Forward Operating Location for fighter aircraft",
+        "latitude": 68.3032,
+        "longitude": -133.4834
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Resolute Bay",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Canadian Armed Forces Arctic Training Centre",
+        "latitude": 74.7188,
+        "longitude": -94.9693
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Alert",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Canadian Forces Station Alert",
+        "latitude": 82.5018,
+        "longitude": -62.3481
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Eureka",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Communications facilities linked to Alert",
+        "latitude": 79.9893,
+        "longitude": -85.9407
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Nanisivik",
+        "domain": "Sea",
+        "material": "Naval and Coast Guard vessels",
+        "information": "Naval and Coast Guard refuelling facility",
+        "latitude": 73.0689,
+        "longitude": -84.5492
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Iqaluit",
+        "domain": "Air",
+        "material": "Fighter aircraft",
+        "information": "JTF North Detachment Nunavut; Forward Operating Location for fighter aircraft",
+        "latitude": 63.7564,
+        "longitude": -68.5566
+    },
+    {
+        "country": "Canada",
+        "facility_name": "Hall Beach",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "One of 11 long range and 36 short range radar sites for the NORAD North Warning System",
+        "latitude": 68.7761,
+        "longitude": -81.2443
+    },
+    {
+        "country": "United States",
+        "facility_name": "Eareckson Air Station",
+        "domain": "Space",
+        "material": "N/A",
+        "information": "Hosts the AN/FPS-108 COBRA DANE phased array radar for the United States Space Force",
+        "latitude": 52.7122,
+        "longitude": 174.1136
+    },
+    {
+        "country": "United States",
+        "facility_name": "Dutch Harbor",
+        "domain": "Sea",
+        "material": "Coast Guard vessels",
+        "information": "Coast Guard Dock with civilian and Coast Guard berthing and warehousing",
+        "latitude": 53.8950,
+        "longitude": -166.5360
+    },
+    {
+        "country": "United States",
+        "facility_name": "Kotzebue",
+        "domain": "Air",
+        "material": "US Coast Guard aircraft",
+        "information": "Annually established forward operating location for US Coast Guard",
+        "latitude": 66.8847,
+        "longitude": -162.5983
+    },
+    {
+        "country": "United States",
+        "facility_name": "Fort Wainwright",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "US Army Base",
+        "latitude": 64.8378,
+        "longitude": -147.6144
+    },
+    {
+        "country": "United States",
+        "facility_name": "Clear Space Force Station",
+        "domain": "Space",
+        "material": "N/A",
+        "information": "Missile warning and tracking, and space domain awareness",
+        "latitude": 64.2905,
+        "longitude": -149.1866
+    },
+    {
+        "country": "United States",
+        "facility_name": "Eielson Air Force Base",
+        "domain": "Air",
+        "material": "F-35 fighters",
+        "information": "Hosts F-35 fighters",
+        "latitude": 64.6657,
+        "longitude": -147.1017
+    },
+    {
+        "country": "United States",
+        "facility_name": "Kodiak Air Station",
+        "domain": "Air",
+        "material": "US Coast Guard aircraft",
+        "information": "US Coast Guard",
+        "latitude": 57.7508,
+        "longitude": -152.5119
+    },
+    {
+        "country": "United States",
+        "facility_name": "Elmendorf-Richardson",
+        "domain": "Air/Land",
+        "material": "F-22 fighters",
+        "information": "Hosts Alaskan NORAD Region, F-22 fighters; Air Force and Army joint Base",
+        "latitude": 61.2509,
+        "longitude": -149.8062
+    },
+    {
+        "country": "United States",
+        "facility_name": "Fort Greely",
+        "domain": "Land",
+        "material": "Mid-course interceptors",
+        "information": "Hosts ballistic missile defence mid-course interceptors",
+        "latitude": 63.9050,
+        "longitude": -145.5546
+    },
+    {
+        "country": "United States",
+        "facility_name": "Sitka Air Station",
+        "domain": "Air",
+        "material": "US Coast Guard aircraft",
+        "information": "US Coast Guard Air Station",
+        "latitude": 57.0471,
+        "longitude": -135.3614
+    },
+    {
+        "country": "Greenland",
+        "facility_name": "Pituffik Space Base",
+        "domain": "Space",
+        "material": "N/A",
+        "information": "Formerly Thule Air Base; Supports missile warning, space surveillance, satellite command and control",
+        "latitude": 76.5312,
+        "longitude": -68.7032
+    },
+    {
+        "country": "Greenland",
+        "facility_name": "Nuuk",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Joint Arctic Command of the Danish Defence Forces in Greenland and the Faroes Islands",
+        "latitude": 64.1833,
+        "longitude": -51.7214
+    },
+    {
+        "country": "Greenland",
+        "facility_name": "Grønnedal",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Station of the Danish Joint Arctic Command",
+        "latitude": 61.2333,
+        "longitude": -48.1000
+    },
+    {
+        "country": "Iceland",
+        "facility_name": "Keflavik Base",
+        "domain": "Air",
+        "material": "Fighters, AWACS, support aircraft, B-2 bombers",
+        "information": "Periodically hosts NATO fighter, AWACS and support aircraft; US B-2 stealth bombers operate from here",
+        "latitude": 63.9850,
+        "longitude": -22.6056
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Sortland",
+        "domain": "Sea",
+        "material": "Navy and Coast Guard vessels",
+        "information": "Navy and Coast Guard",
+        "latitude": 68.6961,
+        "longitude": 15.4125
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Andoya Air Station",
+        "domain": "Air",
+        "material": "Maritime Patrol Aircraft",
+        "information": "Maritime Patrol Aircraft",
+        "latitude": 69.2925,
+        "longitude": 16.1442
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Harstad-Trodenes",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Navy, and Allied Training Centre",
+        "latitude": 68.8153,
+        "longitude": 16.5564
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Evenes",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Army garrison",
+        "latitude": 68.4913,
+        "longitude": 16.6781
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Bjerkvik",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Maintenance centre",
+        "latitude": 68.5522,
+        "longitude": 17.5503
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Setermoen",
+        "domain": "Land",
+        "material": "Armoured battalion",
+        "information": "Armoured battalion",
+        "latitude": 68.8617,
+        "longitude": 18.3522
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Sorreisa",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Surveillance",
+        "latitude": 69.1439,
+        "longitude": 18.1561
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Skjold",
+        "domain": "Land",
+        "material": "Army battalion",
+        "information": "Army battalion",
+        "latitude": 69.0306,
+        "longitude": 19.2967
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Bardufoss",
+        "domain": "Air",
+        "material": "Helicopters",
+        "information": "Helicopter base",
+        "latitude": 69.0558,
+        "longitude": 18.5404
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Porsanger",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Army",
+        "latitude": 70.0244,
+        "longitude": 25.0200
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Banak",
+        "domain": "Air",
+        "material": "F-16 fighters",
+        "information": "Air Force – F-16 fighters",
+        "latitude": 70.0683,
+        "longitude": 24.9739
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Sor-Varanger/Kirkenes",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Patrols border with Russia",
+        "latitude": 69.7258,
+        "longitude": 29.8913
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Vardo",
+        "domain": "Land",
+        "material": "Radar",
+        "information": "Radar facility",
+        "latitude": 70.3705,
+        "longitude": 31.1278
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Orland Air Base",
+        "domain": "Air",
+        "material": "F-35 fighters",
+        "information": "Air Base – F-35 fighters",
+        "latitude": 63.6997,
+        "longitude": 9.6042
+    },
+    {
+        "country": "Norway",
+        "facility_name": "Bodo",
+        "domain": "Air",
+        "material": "Search and Rescue helicopters",
+        "information": "Search and Rescue helicopter squadron; Joint Rescue Coordination Centre of Northern Norway",
+        "latitude": 67.2692,
+        "longitude": 14.3664
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Anadyr-Ugolny",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Military/Civilian airfield",
+        "latitude": 64.7350,
+        "longitude": 177.7383
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Provideniya",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Civil/Military Airfield; Serves east end of Northern Sea Route",
+        "latitude": 64.3811,
+        "longitude": -173.2356
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Cape Schmidt",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Airfield (also serves Wrangel)",
+        "latitude": 68.8683,
+        "longitude": -179.3756
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Wrangel Island/Zvyozdny",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Trefoil Base – Polar Star; No air access",
+        "latitude": 70.9667,
+        "longitude": -178.5000
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Pevek",
+        "domain": "Air/Sea",
+        "material": "N/A",
+        "information": "Military Civilian airfield; Nuclear Power Plant on barge",
+        "latitude": 69.7833,
+        "longitude": 170.6000
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Chersky",
+        "domain": "Sea/Air",
+        "material": "N/A",
+        "information": "Port, airfield",
+        "latitude": 68.7433,
+        "longitude": 161.3367
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Tiksi",
+        "domain": "Land/Air/Sea",
+        "material": "N/A",
+        "information": "Garrison to house 100 military personnel; Naval Base, Airfield",
+        "latitude": 71.7028,
+        "longitude": 128.9036
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Kotelny Island – Temp",
+        "domain": "Air",
+        "material": "Transport aircraft",
+        "information": "Trefoil Base; Airfield (year-round transport aircraft)",
+        "latitude": 75.7686,
+        "longitude": 137.5825
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Severnayer Zemlya – Sredny",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Airfield",
+        "latitude": 79.5483,
+        "longitude": 91.0833
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Alykel/Dudinka",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Airfield/Emergency Rescue Centre",
+        "latitude": 69.3100,
+        "longitude": 87.3333
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Nadym",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Airfield",
+        "latitude": 65.4800,
+        "longitude": 72.7033
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Sabetta/Dikson",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Border guard location, linked to LNG operations; Dual use Airfield",
+        "latitude": 71.2700,
+        "longitude": 72.0733
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Amderma",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Airfield",
+        "latitude": 69.7633,
+        "longitude": 61.5633
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Franz Josef – Nagurskoye",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Trefoil Base; Airfield",
+        "latitude": 80.8017,
+        "longitude": 47.6683
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Novaya Zemlya – Rogachevo",
+        "domain": "Air/Sea",
+        "material": "Air defence units",
+        "information": "Harbour and Airfield, Air defence units",
+        "latitude": 71.6167,
+        "longitude": 52.4767
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Vorkuta",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Airfield",
+        "latitude": 67.4883,
+        "longitude": 64.0000
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Naryan-Mar",
+        "domain": "Air",
+        "material": "N/A",
+        "information": "Airfield",
+        "latitude": 67.6333,
+        "longitude": 53.0833
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Arkhangelsk",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Headquarters of North Command; Military logistics centre",
+        "latitude": 64.5983,
+        "longitude": 40.7167
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Pechenga/Sputnik",
+        "domain": "Land/Air",
+        "material": "N/A",
+        "information": "Airfield, Infantry Base (Arctic Brigade); Naval Infantry Brigade at Sputnik",
+        "latitude": 69.5489,
+        "longitude": 31.2178
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Alakurtti",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Air strip, Arctic Brigade",
+        "latitude": 66.9767,
+        "longitude": 30.3500
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Zapadnaya Litsa",
+        "domain": "Sea",
+        "material": "Nuclear powered subs (Yassen Class)",
+        "information": "Four facilities: Andreeva Bay (spent fuel), Bolshaya Lopatka (Main base: nuclear-powered subs), Malaya Lopatka (maintenance closed), Nerpicha (nuclear weapons storage)",
+        "latitude": 69.4333,
+        "longitude": 32.4450
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Vidyayevo",
+        "domain": "Sea",
+        "material": "Diesel powered subs",
+        "information": "Guba Ara, diesel sub base; Guba Ura, proposed LNG terminal docks",
+        "latitude": 69.3242,
+        "longitude": 32.8058
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Gadzhiyevo",
+        "domain": "Sea",
+        "material": "SSBNs",
+        "information": "SSBN Base; Nuclear weapons/missile storage; Sayda Guba (sub storage); Olenya Guba (spy sub base); Nerpa Shipyard",
+        "latitude": 69.2583,
+        "longitude": 33.3350
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Olenya Air Base",
+        "domain": "Air",
+        "material": "Reconnaissance aircraft",
+        "information": "Naval Reconnaissance Air Division",
+        "latitude": 68.1500,
+        "longitude": 33.4833
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Severomorsk Northern Fleet HQ",
+        "domain": "Sea",
+        "material": "N/A",
+        "information": "Okolnaya weapons storage and handling",
+        "latitude": 69.0692,
+        "longitude": 33.4167
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Severomorsk Air Base",
+        "domain": "Air",
+        "material": "Patrol and combat aircraft",
+        "information": "Domain awareness; Range of patrol and combat aircraft",
+        "latitude": 69.0300,
+        "longitude": 33.4300
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Monchegorsk",
+        "domain": "Air",
+        "material": "Fighter aircraft",
+        "information": "Air base, fighter aircraft",
+        "latitude": 67.9867,
+        "longitude": 33.0183
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Polyarny Naval Base",
+        "domain": "Sea",
+        "material": "Military vessels, nuclear submarines",
+        "information": "Services and dismantles military vessels, including nuclear submarines",
+        "latitude": 69.1989,
+        "longitude": 33.4558
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Schukozero",
+        "domain": "Land",
+        "material": "Nuclear Weapons",
+        "information": "Nuclear Weapons storage",
+        "latitude": 69.0650,
+        "longitude": 33.2900
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Bolshoya Ramozero",
+        "domain": "Land",
+        "material": "Nuclear Weapons",
+        "information": "Nuclear Weapons storage",
+        "latitude": 68.2332,
+        "longitude": 33.8692
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Gremikha",
+        "domain": "Sea",
+        "material": "Submarine reactor cores",
+        "information": "Submarine reactor cores storage; Subs withdrawn from service; Storage of spent fuel and radioactive waste",
+        "latitude": 68.0500,
+        "longitude": 39.5000
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Kirovsk",
+        "domain": "Land",
+        "material": "N/A",
+        "information": "Emergency Rescue Centre, Murmansk",
+        "latitude": 67.6020,
+        "longitude": 33.7276
+    },
+    {
+        "country": "Russia",
+        "facility_name": "Severodvinsk Shipbuilding Centre",
+        "domain": "Sea",
+        "material": "Submarines",
+        "information": "Submarine construction/dismantlement",
+        "latitude": 64.5800,
+        "longitude": 39.7900
+    }
+]

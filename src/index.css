@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand Colors - Deep Arctic Theme */
+  --bg-space: #05080a;
+  --bg-deep: #0a0f1c;
+  --bg-panel: rgba(12, 18, 30, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+
+  /* Accents */
+  --color-neon-blue: #00f3ff;
+  --color-ice-white: #e0f7fa;
+  --color-alert-red: #ff2a6d;
+  --color-gold: #ffd700;
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Glassmorphism */
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-blur: blur(12px);
+  --shadow-glow: 0 0 15px rgba(0, 243, 255, 0.15);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-space);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  /* Prevent scrolling on map app */
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* Utilities */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+}
+
+.text-neon {
+  color: var(--color-neon-blue);
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.4);
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* MapLibre Overrides for Dark Mode */
+.maplibregl-popup-content {
+  background: var(--bg-deep) !important;
+  color: var(--text-primary) !important;
+  border: var(--glass-border);
+  border-radius: 8px !important;
+  backdrop-filter: blur(8px);
+}
+
+.maplibregl-ctrl-group {
+  background: var(--bg-panel) !important;
+  border: var(--glass-border);
+}
+
+
+/* Global height fix to ensure map container works */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* Ensure map container is not collapsed by Tailwind issues */
+.maplibregl-map {
+  height: 100% !important;
+  width: 100% !important;
+}

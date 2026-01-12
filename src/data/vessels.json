@@ -1,0 +1,187 @@
+{
+    "project": "Arctic_Bastion_2026",
+    "last_updated": "2026-01-10",
+    "theatre": "Greenland-Arctic_High_North",
+    "vessel_registry": [
+        {
+            "category": "Russian_Nuclear_Sovereignty",
+            "vessels": [
+                {
+                    "name": "Arktika",
+                    "flag": "RU",
+                    "imo": "9694725",
+                    "mmsi": "273210920",
+                    "class": "Project 22220",
+                    "status": "Active_NSR_Escort"
+                },
+                {
+                    "name": "Sibir",
+                    "flag": "RU",
+                    "imo": "9774422",
+                    "mmsi": "273123123",
+                    "class": "Project 22220",
+                    "status": "Active"
+                },
+                {
+                    "name": "Ural",
+                    "flag": "RU",
+                    "imo": "9658642",
+                    "mmsi": "273618600",
+                    "class": "Project 22220",
+                    "status": "Active"
+                },
+                {
+                    "name": "Yakutiya",
+                    "flag": "RU",
+                    "imo": "9911202",
+                    "mmsi": "273250170",
+                    "class": "Project 22220",
+                    "status": "Active_Comissioned_2025"
+                },
+                {
+                    "name": "Chukotka",
+                    "flag": "RU",
+                    "imo": "9924106",
+                    "mmsi": "0",
+                    "class": "Project 22220",
+                    "status": "Trials_Sea_2026"
+                },
+                {
+                    "name": "Yamal",
+                    "flag": "RU",
+                    "imo": "9077549",
+                    "mmsi": "273132400",
+                    "class": "Arktika-Class",
+                    "status": "Operational"
+                },
+                {
+                    "name": "50 Let Pobedy",
+                    "flag": "RU",
+                    "imo": "9152959",
+                    "mmsi": "273316240",
+                    "class": "Arktika-Class",
+                    "status": "Operational"
+                },
+                {
+                    "name": "Taymyr",
+                    "flag": "RU",
+                    "imo": "8807179",
+                    "mmsi": "273135100",
+                    "class": "Shallow-Draft",
+                    "status": "River_Estuary_Patrol"
+                }
+            ]
+        },
+        {
+            "category": "Chinese_Polar_Silk_Road",
+            "vessels": [
+                {
+                    "name": "Xue Long 2",
+                    "flag": "CN",
+                    "imo": "9829241",
+                    "mmsi": "413381260",
+                    "role": "Research_Icebreaker",
+                    "strategic_note": "Dual-use seabed mapping"
+                },
+                {
+                    "name": "Ji Di",
+                    "flag": "CN",
+                    "imo": "9962299",
+                    "mmsi": "413554110",
+                    "role": "Research",
+                    "strategic_note": "New 2025 Arctic Entry"
+                },
+                {
+                    "name": "Zhong Shan Da Xue Ji Di",
+                    "flag": "LR",
+                    "imo": "8130693",
+                    "mmsi": "636017048",
+                    "role": "Research",
+                    "strategic_note": "Flag of Convenience (Liberia)"
+                },
+                {
+                    "name": "Istanbul Bridge",
+                    "flag": "LR",
+                    "imo": "9200811",
+                    "mmsi": "636024859",
+                    "role": "Container_PC",
+                    "strategic_note": "Maiden Arctic Express Route vessel"
+                },
+                {
+                    "name": "NewNew Polar Bear",
+                    "flag": "HK",
+                    "imo": "9313204",
+                    "mmsi": "477893800",
+                    "role": "Container_PC",
+                    "strategic_note": "High-frequency NSR operator"
+                }
+            ]
+        },
+        {
+            "category": "Arctic_LNG_Shadow_Fleet",
+            "vessels": [
+                {
+                    "name": "Christophe de Margerie",
+                    "flag": "RU",
+                    "imo": "9737187",
+                    "mmsi": "273346720",
+                    "role": "Arc7 LNG",
+                    "status": "Active_Sanctioned"
+                },
+                {
+                    "name": "Buran",
+                    "flag": "PA",
+                    "imo": "9953523",
+                    "mmsi": "352003185",
+                    "role": "Shadow_LNG",
+                    "strategic_note": "Ex-North_Sky; frequent AIS disabling"
+                },
+                {
+                    "name": "Voskhod",
+                    "flag": "PA",
+                    "imo": "9953535",
+                    "mmsi": "352003184",
+                    "role": "Shadow_LNG",
+                    "strategic_note": "Ex-North_Way"
+                },
+                {
+                    "name": "Arctic Vostok",
+                    "flag": "RU",
+                    "imo": "9216298",
+                    "mmsi": "273299410",
+                    "role": "Arc7 LNG",
+                    "status": "Active_Under_Sanctions"
+                },
+                {
+                    "name": "Iris",
+                    "flag": "PA",
+                    "imo": "9314818",
+                    "mmsi": "352003200",
+                    "role": "Shadow_LNG",
+                    "strategic_note": "Linked to covert transshipment 2026"
+                }
+            ]
+        },
+        {
+            "category": "Russian_Naval_Strike",
+            "vessels": [
+                {
+                    "name": "Admiral Gorshkov",
+                    "flag": "RU",
+                    "pennant": "454",
+                    "imo": "N/A",
+                    "role": "Frigate",
+                    "weapons": "Zircon_Hypersonic"
+                },
+                {
+                    "name": "Severodvinsk",
+                    "flag": "RU",
+                    "pennant": "K-560",
+                    "imo": "N/A",
+                    "role": "SSGN",
+                    "class": "Yasen-Class"
+                }
+            ]
+        }
+    ]
+}

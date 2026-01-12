@@ -1,0 +1,168 @@
+
+/**
+ * LayerManager Service
+ * Handles the configuration and state of map layers (Resource, Strategic, Maritime).
+ */
+export const THEATRES = {
+    RESOURCE: 'resource',
+    STRATEGIC: 'strategic',
+    MARITIME: 'maritime'
+};
+
+export const LAYER_GROUPS = {
+    [THEATRES.RESOURCE]: [
+        { id: 'mines', name: 'Strategic Mines', type: 'circle', color: '#ffd700' },
+        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#00f3ff' }
+    ],
+    [THEATRES.STRATEGIC]: [
+        { id: 'bases', name: 'Military Bases', type: 'symbol', color: '#ff2a6d' },
+        { id: 'giuk', name: 'GIUK Gap', type: 'line', color: '#ff2a6d' },
+        { id: 'bastion', name: 'Russian Bastion', type: 'line', color: '#ff2a6d' }
+    ],
+    [THEATRES.MARITIME]: [
+        { id: 'ais', name: 'Live Shipping (AIS)', type: 'circle', color: '#00ff00' },
+        { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' }
+    ]
+};
+
+class LayerManager {
+    constructor(map) {
+        this.map = map;
+        this.activeLayers = new Set();
+    }
+
+    async init() {
+        // Initialize empty sources for all defined layers
+        Object.values(LAYER_GROUPS).flat().forEach(layer => {
+            if (!this.map.getSource(layer.id)) {
+                this.map.addSource(layer.id, {
+                    type: 'geojson',
+                    data: { type: 'FeatureCollection', features: [] } // Empty initial data
+                });
+            }
+        });
+
+        // Load static data
+        try {
+            const minesData = await import('../data/mines.json');
+            this.updateSource('mines', minesData.default || minesData);
+
+            // Load the new expanded military bases data
+            const militaryBases = await import('../data/militarybases.json');
+            this.updateSource('bases', this.convertToGeoJSON(militaryBases.default || militaryBases));
+
+            const eezData = await import('../data/eez.json');
+            this.updateSource('eez', eezData.default || eezData);
+
+            const strategicData = await import('../data/strategic_lines.json');
+            const data = strategicData.default || strategicData;
+
+            // Extract GIUK and Bastion from the collection
+            const giukFeature = data.features.find(f => f.properties.id === 'giuk');
+            const bastionFeature = data.features.find(f => f.properties.id === 'bastion');
+
+            if (giukFeature) {
+                this.updateSource('giuk', { type: 'FeatureCollection', features: [giukFeature] });
+            }
+            if (bastionFeature) {
+                this.updateSource('bastion', { type: 'FeatureCollection', features: [bastionFeature] });
+            }
+
+        } catch (e) {
+            console.error("Failed to load static layer data", e);
+        }
+    }
+
+    /**
+     * Converts raw JSON base data to GeoJSON FeatureCollection
+     */
+    convertToGeoJSON(data) {
+        if (!data || !Array.isArray(data)) return { type: 'FeatureCollection', features: [] };
+
+        const features = data.map(base => ({
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [base.longitude, base.latitude]
+            },
+            properties: {
+                ...base,
+                // Map domains to icon categories
+                domain_icon: this.normalizeDomain(base.domain)
+            }
+        }));
+
+        return {
+            type: 'FeatureCollection',
+            features
+        };
+    }
+
+    /**
+     * Maps domain strings to specific icon names
+     */
+    normalizeDomain(domain = '') {
+        const d = domain.toLowerCase();
+        if (d.includes('/') || d.includes(',') || d === 'hybrid') return 'joint';
+        if (d.includes('land')) return 'land';
+        if (d.includes('air')) return 'air';
+        if (d.includes('sea')) return 'sea';
+        if (d.includes('space')) return 'space';
+        return 'joint';
+    }
+
+    toggleLayer(layerId, visible) {
+        if (visible) {
+            this.map.setLayoutProperty(layerId, 'visibility', 'visible');
+            this.activeLayers.add(layerId);
+        } else {
+            this.map.setLayoutProperty(layerId, 'visibility', 'none');
+            this.activeLayers.delete(layerId);
+        }
+    }
+
+    // Method to update data for a specific source
+    updateSource(sourceId, geojsonData) {
+        const source = this.map.getSource(sourceId);
+        if (source) {
+            source.setData(geojsonData);
+        }
+    }
+
+    setTheatre(theatre) {
+        // Hide all layers first
+        Object.values(LAYER_GROUPS).flat().forEach(layer => {
+            if (this.map.getLayer(layer.id)) {
+                this.map.setLayoutProperty(layer.id, 'visibility', 'none');
+            }
+        });
+
+        // Enable layers for the active theatre
+        const theatreLayers = LAYER_GROUPS[theatre] || [];
+        theatreLayers.forEach(layer => {
+            if (this.map.getLayer(layer.id)) {
+                this.map.setLayoutProperty(layer.id, 'visibility', 'visible');
+            }
+        });
+
+        // Manage AIS Tracker
+        if (theatre === THEATRES.MARITIME) {
+            if (!this.aisTracker) {
+                // Dynamic import to avoid circular dependencies if any, or just keeping it clean
+                import('./AISTracker').then(module => {
+                    const AISTracker = module.default; // Adjusted for default export
+                    this.aisTracker = new AISTracker(this.map, 'ais');
+                    this.aisTracker.start();
+                });
+            } else {
+                this.aisTracker.start();
+            }
+        } else {
+            if (this.aisTracker) {
+                this.aisTracker.stop();
+            }
+        }
+    }
+}
+
+export default LayerManager;
