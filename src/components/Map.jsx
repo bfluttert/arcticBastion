@@ -3,6 +3,9 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import LayerManager, { LAYER_GROUPS, THEATRES } from '../services/LayerManager';
 
+// Arctic Circle Data
+import arcticCircleData from '../data/arctic_circle.json';
+
 const Map = ({ activeTheatre }) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -21,7 +24,7 @@ const Map = ({ activeTheatre }) => {
             container: mapContainer.current,
             style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
             center: [0, 90], // Exact North Pole
-            zoom: 3, // Closer zoom to center the pole visually
+            zoom: 0, // Closer zoom to center the pole visually
             pitch: 40, // 40 degrees is "somewhat 3D" but keeps the pole clearly central
             bearing: 0,
             maxPitch: 89, // Almost 90 degrees as requested
@@ -46,9 +49,9 @@ const Map = ({ activeTheatre }) => {
 
             // Force jump to North Pole
             map.current.jumpTo({
-                center: [0, 90],
-                zoom: 3,
-                pitch: 40
+                center: [-30, 90],
+                zoom: 0,
+                pitch: 20
             });
 
             console.log('Current Projection:', map.current.getProjection?.());
@@ -57,29 +60,54 @@ const Map = ({ activeTheatre }) => {
             // 2. Add Atmosphere for 3D effect
             map.current.setFog({
                 'range': [0.5, 10],
-                'color': '#05080a', // Matches --bg-space
+                'color': '#1c1a14', // Matches --bg-space
                 'horizon-blend': 0.1
             });
-
-            // Add 3D Terrain
-            /*
-            // Demo tiles might be unstable, keep disabled if 404s persist
-             try {
-                map.current.addSource('terrain', {
-                    type: 'raster-dem',
-                    url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json',
-                    tileSize: 256
-                });
-                map.current.setTerrain({ source: 'terrain', exaggeration: 1.5 });
-            } catch (err) {
-                 console.warn("Terrain source failed", err);
-            }
-            */
         });
 
         // Dedicated handler for Layers - waits for style to be ready
         map.current.on('style.load', async () => {
             console.log("Style loaded - Initializing LayerManager...");
+
+            // Arctic Circle Layer (Permanent)
+            if (!map.current.getSource('arctic_circle')) {
+                map.current.addSource('arctic_circle', {
+                    type: 'geojson',
+                    data: arcticCircleData
+                });
+
+                map.current.addLayer({
+                    id: 'arctic_circle',
+                    type: 'line',
+                    source: 'arctic_circle',
+                    paint: {
+                        'line-color': '#b3e5fc', // Light blue/cyan
+                        'line-width': 1.5,
+                        'line-dasharray': [4, 2],
+                        'line-opacity': 0.6
+                    }
+                });
+
+                map.current.addLayer({
+                    id: 'arctic_circle-label',
+                    type: 'symbol',
+                    source: 'arctic_circle',
+                    layout: {
+                        'symbol-placement': 'line',
+                        'text-field': 'Arctic Circle',
+                        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+                        'text-size': 12,
+                        'text-letter-spacing': 0.1,
+                        'text-max-angle': 30
+                    },
+                    paint: {
+                        'text-color': '#b3e5fc',
+                        'text-opacity': 0.8,
+                        'text-halo-color': '#000',
+                        'text-halo-width': 1
+                    }
+                });
+            }
 
             // Load Custom Icons
             const icons = [
