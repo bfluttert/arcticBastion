@@ -7,7 +7,7 @@ function App() {
   const [activeTheatre, setActiveTheatre] = useState(THEATRES.RESOURCE);
 
   return (
-    <div className="w-full h-screen bg-black text-white overflow-hidden relative selection:bg-cyan-500 selection:text-black">
+    <div className="w-full h-screen bg-[var(--bg-space)] text-white overflow-hidden relative selection:bg-cyan-500 selection:text-black">
       {/* Background Map */}
       <Map activeTheatre={activeTheatre} />
 
@@ -36,8 +36,8 @@ function App() {
           <button
             onClick={() => setActiveTheatre(THEATRES.RESOURCE)}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 ${activeTheatre === THEATRES.RESOURCE
-                ? 'bg-cyan-500/20 border border-cyan-500 text-cyan-300 shadow-[0_0_15px_rgba(0,243,255,0.3)]'
-                : 'hover:bg-white/5 text-slate-400'
+              ? 'bg-cyan-500/20 border border-cyan-500 text-cyan-300 shadow-[0_0_15px_rgba(0,243,255,0.3)]'
+              : 'hover:bg-white/5 text-slate-400'
               }`}
           >
             <Zap className="w-4 h-4" />
@@ -49,8 +49,8 @@ function App() {
           <button
             onClick={() => setActiveTheatre(THEATRES.STRATEGIC)}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 ${activeTheatre === THEATRES.STRATEGIC
-                ? 'bg-red-500/20 border border-red-500 text-red-300 shadow-[0_0_15px_rgba(255,42,109,0.3)]'
-                : 'hover:bg-white/5 text-slate-400'
+              ? 'bg-red-500/20 border border-red-500 text-red-300 shadow-[0_0_15px_rgba(255,42,109,0.3)]'
+              : 'hover:bg-white/5 text-slate-400'
               }`}
           >
             <Shield className="w-4 h-4" />
@@ -62,8 +62,8 @@ function App() {
           <button
             onClick={() => setActiveTheatre(THEATRES.MARITIME)}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 ${activeTheatre === THEATRES.MARITIME
-                ? 'bg-blue-500/20 border border-blue-500 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                : 'hover:bg-white/5 text-slate-400'
+              ? 'bg-blue-500/20 border border-blue-500 text-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+              : 'hover:bg-white/5 text-slate-400'
               }`}
           >
             <Anchor className="w-4 h-4" />
