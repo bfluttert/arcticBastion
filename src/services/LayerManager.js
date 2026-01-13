@@ -11,8 +11,7 @@ export const THEATRES = {
 
 export const LAYER_GROUPS = {
     [THEATRES.RESOURCE]: [
-        { id: 'mines', name: 'Strategic Mines', type: 'circle', color: '#ffd700' },
-        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#00f3ff' }
+        { id: 'mines', name: 'Strategic Mines', type: 'circle', color: '#ffd700' }
     ],
     [THEATRES.STRATEGIC]: [
         { id: 'bases', name: 'Military Bases', type: 'symbol', color: '#ff2a6d' },
@@ -21,7 +20,8 @@ export const LAYER_GROUPS = {
     ],
     [THEATRES.MARITIME]: [
         { id: 'ais', name: 'Live Shipping (AIS)', type: 'circle', color: '#00ff00' },
-        { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' }
+        { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' },
+        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#00f3ff' }
     ]
 };
 
@@ -39,6 +39,7 @@ class LayerManager {
                     type: 'geojson',
                     data: { type: 'FeatureCollection', features: [] } // Empty initial data
                 });
+                console.log(`Initialized empty source: ${layer.id}`);
             }
         });
 
@@ -49,7 +50,12 @@ class LayerManager {
 
             // Load the new expanded military bases data
             const militaryBases = await import('../data/militarybases.json');
-            this.updateSource('bases', this.convertToGeoJSON(militaryBases.default || militaryBases));
+            const baseData = militaryBases.default || militaryBases;
+            console.log(`Loaded ${baseData.length} military bases`);
+
+            const baseGeoJSON = this.convertToGeoJSON(baseData);
+            this.updateSource('bases', baseGeoJSON);
+            console.log('Military bases source updated with features:', baseGeoJSON.features.length);
 
             const eezData = await import('../data/eez.json');
             this.updateSource('eez', eezData.default || eezData);
@@ -101,13 +107,23 @@ class LayerManager {
     /**
      * Maps domain strings to specific icon names
      */
+    /**
+     * Maps domain strings to specific icon names
+     */
     normalizeDomain(domain = '') {
-        const d = domain.toLowerCase();
-        if (d.includes('/') || d.includes(',') || d === 'hybrid') return 'joint';
+        const d = String(domain).toLowerCase().trim();
+
+        // Complex/Joint domains
+        if (d.includes('/') || d.includes(',') || d === 'hybrid' || d.includes('joint')) return 'joint';
+
+        // Specific domains
         if (d.includes('land')) return 'land';
         if (d.includes('air')) return 'air';
-        if (d.includes('sea')) return 'sea';
+        if (d.includes('sea') || d.includes('naval') || d.includes('maritime')) return 'sea';
         if (d.includes('space')) return 'space';
+
+        // Fallback
+        console.warn(`Unmapped domain: "${domain}", falling back to joint`);
         return 'joint';
     }
 

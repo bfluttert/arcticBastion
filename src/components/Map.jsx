@@ -37,6 +37,7 @@ const Map = ({ activeTheatre }) => {
         // Unified load handler
         map.current.on('load', async () => {
             console.log('MapLibre LOADED!');
+            console.log('MapLibre Object:', maplibregl);
             console.log('MapLibre Version:', maplibregl.version);
 
             // 1. Force Projection & View
@@ -55,11 +56,15 @@ const Map = ({ activeTheatre }) => {
             setIsLoaded(true);
 
             // 2. Add Atmosphere for 3D effect
-            map.current.setFog({
-                'range': [0.5, 10],
-                'color': '#05080a', // Matches --bg-space
-                'horizon-blend': 0.1
-            });
+            if (map.current.setFog) {
+                map.current.setFog({
+                    'range': [0.5, 10],
+                    'color': '#05080a', // Matches --bg-space
+                    'horizon-blend': 0.1
+                });
+            } else {
+                console.warn('MapLibre setFog not supported');
+            }
 
             // Add 3D Terrain
             /*
@@ -90,21 +95,29 @@ const Map = ({ activeTheatre }) => {
                 { id: 'joint', url: '/icons/military-joint.svg' }
             ];
 
-            await Promise.all(icons.map(icon => {
-                return new Promise((resolve, reject) => {
-                    map.current.loadImage(icon.url, (error, image) => {
-                        if (error) {
-                            console.error(`Failed to load icon ${icon.id}:`, error);
-                            resolve(); // Continue anyway
-                        } else {
-                            if (!map.current.hasImage(icon.id)) {
-                                map.current.addImage(icon.id, image);
-                            }
-                            resolve();
+            // Custom robust image loader
+            const loadIcon = (id, url) => {
+                return new Promise((resolve) => {
+                    const img = new Image(32, 32);
+                    img.onload = () => {
+                        if (!map.current) return;
+                        if (!map.current.hasImage(id)) {
+                            map.current.addImage(id, img);
+                            console.log(`Successfully loaded icon: ${id}`);
                         }
-                    });
+                        resolve(true);
+                    };
+                    img.onerror = (e) => {
+                        console.error(`Failed to load icon image ${id}:`, e);
+                        resolve(false);
+                    };
+                    img.crossOrigin = "Anonymous";
+                    img.src = url;
                 });
-            }));
+            };
+
+            // Load all icons in parallel
+            await Promise.all(icons.map(icon => loadIcon(icon.id, icon.url)));
 
             // Prevent re-initialization if already done
             if (layerManager.current) return;
@@ -172,9 +185,14 @@ const Map = ({ activeTheatre }) => {
                                 'text-anchor': 'top'
                             },
                             paint: {
-                                'text-color': '#ff2a6d',
+                                'text-color': [
+                                    'match',
+                                    ['get', 'country'],
+                                    'Russia', '#ff3333', // Darker Red for Russia
+                                    '#3388ff'  // Darker Blue for others
+                                ],
                                 'text-halo-color': '#000',
-                                'text-halo-width': 1
+                                'text-halo-width': 2
                             }
                         });
                     } else if (layer.type === 'symbol') {
@@ -258,20 +276,20 @@ const Map = ({ activeTheatre }) => {
                     }
 
                     const content = `
-                        <div class="text-black p-2 min-w-[200px]">
-                            <h3 class="font-bold text-lg border-b pb-1 mb-2">${name}</h3>
-                            <div class="grid grid-cols-2 gap-x-2 text-sm">
-                                <span class="text-slate-500">Country:</span>
-                                <span class="font-medium">${country}</span>
-                                <span class="text-slate-500">Domain:</span>
-                                <span class="font-medium text-emerald-600">${domain}</span>
+                        <div class="text-slate-200 p-2 min-w-[200px]">
+                            <h3 class="font-bold text-lg border-b border-slate-700 pb-1 mb-2 text-white">${name}</h3>
+                            <div class="grid grid-cols-[max-content_1fr] gap-x-3 gap-y-1 text-sm">
+                                <span class="text-slate-400">Country:</span>
+                                <span class="font-medium text-slate-100">${country}</span>
+                                <span class="text-slate-400">Domain:</span>
+                                <span class="font-medium text-neon-blue">${domain}</span>
                             </div>
                             ${material ? `
-                            <div class="mt-2 text-xs bg-slate-100 p-1 rounded">
-                                <span class="font-bold block uppercase text-[10px] text-slate-500">Assets</span>
-                                ${material}
+                            <div class="mt-3 text-xs bg-slate-800/50 border border-slate-700/50 p-2 rounded">
+                                <span class="font-bold block uppercase text-[10px] text-slate-400 mb-1">Assets</span>
+                                <span class="text-slate-200">${material}</span>
                             </div>` : ''}
-                            <p class="text-sm mt-3 border-t pt-2 border-slate-100">${info}</p>
+                            <p class="text-sm mt-3 border-t border-slate-700 pt-2 text-slate-300 italic">${info}</p>
                         </div>
                     `;
 

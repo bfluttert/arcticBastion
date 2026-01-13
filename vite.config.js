@@ -14,4 +14,18 @@ export default defineConfig({
       ],
     },
   },
+  server: {
+    proxy: {
+      '/ais-stream': {
+        target: 'wss://stream.aisstream.io/v0/stream',
+        ws: true,
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/ais-stream/, ''),
+        headers: {
+          'Origin': 'https://stream.aisstream.io'
+        }
+      }
+    }
+  }
 })
