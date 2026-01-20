@@ -11,7 +11,8 @@ export const THEATRES = {
 
 export const LAYER_GROUPS = {
     [THEATRES.RESOURCE]: [
-        { id: 'mines', name: 'Strategic Mines', type: 'circle', color: '#ffd700' }
+        { id: 'mines', name: 'Strategic Mines', type: 'circle', color: '#ffd700' },
+        { id: 'relief', name: 'Global Relief', type: 'hillshade' }
     ],
     [THEATRES.STRATEGIC]: [
         { id: 'bases', name: 'Military Bases', type: 'symbol', color: '#ff2a6d' },
@@ -21,9 +22,8 @@ export const LAYER_GROUPS = {
     [THEATRES.MARITIME]: [
         { id: 'ais', name: 'Live Shipping (AIS)', type: 'circle', color: '#00ff00' },
         { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' },
-        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#698b8dff' },
-        { id: 'giuk', name: 'GIUK Gap', type: 'line', color: '#3388ff' },
-        { id: 'bastion', name: 'Bear Gap', type: 'line', color: '#ff3333' }
+        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#56878aff' },
+        { id: 'shipping_routes', name: 'Arctic Shipping Routes', type: 'line', color: '#ffaa00' }
     ]
 };
 
@@ -36,6 +36,7 @@ class LayerManager {
     async init() {
         // Initialize empty sources for all defined layers
         Object.values(LAYER_GROUPS).flat().forEach(layer => {
+            if (layer.type === 'hillshade') return; // Hillshade uses a shared source defined in Map.jsx
             if (!this.map.getSource(layer.id)) {
                 this.map.addSource(layer.id, {
                     type: 'geojson',
@@ -75,6 +76,11 @@ class LayerManager {
             if (bastionFeature) {
                 this.updateSource('bastion', { type: 'FeatureCollection', features: [bastionFeature] });
             }
+
+            // Load Arctic Shipping Routes (Northwest Passage, Northern Sea Route, Transpolar)
+            const shippingData = await import('../data/shipping_routes.json');
+            this.updateSource('shipping_routes', shippingData.default || shippingData);
+            console.log('Shipping routes loaded');
 
         } catch (e) {
             console.error("Failed to load static layer data", e);
@@ -148,15 +154,15 @@ class LayerManager {
     }
 
     setTheatre(theatre) {
-        // Hide all layers first
+        // Hide all layers first (including label layers)
         Object.values(LAYER_GROUPS).flat().forEach(layer => {
             if (this.map.getLayer(layer.id)) {
                 this.map.setLayoutProperty(layer.id, 'visibility', 'none');
             }
-            // Also hide labels
-            const labelId = `${layer.id}-label`;
-            if (this.map.getLayer(labelId)) {
-                this.map.setLayoutProperty(labelId, 'visibility', 'none');
+            // Also hide any associated label layers
+            const labelLayerId = `${layer.id}-label`;
+            if (this.map.getLayer(labelLayerId)) {
+                this.map.setLayoutProperty(labelLayerId, 'visibility', 'none');
             }
         });
 
@@ -166,10 +172,10 @@ class LayerManager {
             if (this.map.getLayer(layer.id)) {
                 this.map.setLayoutProperty(layer.id, 'visibility', 'visible');
             }
-            // Also show labels if they exist
-            const labelId = `${layer.id}-label`;
-            if (this.map.getLayer(labelId)) {
-                this.map.setLayoutProperty(labelId, 'visibility', 'visible');
+            // Also show any associated label layers
+            const labelLayerId = `${layer.id}-label`;
+            if (this.map.getLayer(labelLayerId)) {
+                this.map.setLayoutProperty(labelLayerId, 'visibility', 'visible');
             }
         });
 

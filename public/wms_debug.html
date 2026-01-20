@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Copernicus WMTS Debug</title>
+    <style>
+        body {
+            background: #333;
+            color: white;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        .test-case {
+            margin: 20px 0;
+            border: 1px solid #555;
+            padding: 10px;
+        }
+
+        img {
+            background: black;
+            border: 1px solid red;
+            min-width: 100px;
+            min-height: 100px;
+            display: block;
+            margin-top: 10px;
+            max-width: 400px;
+        }
+
+        code {
+            background: #111;
+            padding: 5px;
+            display: block;
+            word-break: break-all;
+            font-size: 0.8em;
+            margin: 5px 0;
+        }
+
+        .success {
+            border-color: green;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Copernicus Marine Sea Ice WMTS Test</h1>
+
+    <div class="test-case">
+        <h3>1. OSI-SAF Sea Ice Concentration (WMTS)</h3>
+        <p>Product: SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001</p>
+        <code>https://wmts.marine.copernicus.eu/teroWmts/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m/ice_conc/default/2024-01-15/EPSG4326/1/0/0.png</code>
+        <img src="https://wmts.marine.copernicus.eu/teroWmts/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m/ice_conc/default/2024-01-15/EPSG4326/1/0/0.png"
+            alt="Test 1" />
+    </div>
+
+    <div class="test-case">
+        <h3>2. Alternative: WMS Request</h3>
+        <p>Using nrt.cmems-du.eu WMS endpoint</p>
+        <code>https://nrt.cmems-du.eu/thredds/wms/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m?service=WMS&version=1.1.1&request=GetMap&layers=ice_conc&bbox=-180,60,180,90&width=512&height=256&srs=EPSG:4326&format=image/png&transparent=true</code>
+        <img src="https://nrt.cmems-du.eu/thredds/wms/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m?service=WMS&version=1.1.1&request=GetMap&layers=ice_conc&bbox=-180,60,180,90&width=512&height=256&srs=EPSG:4326&format=image/png&transparent=true"
+            alt="Test 2" />
+    </div>
+
+    <div class="test-case">
+        <h3>3. MyOcean WMS (Legacy)</h3>
+        <code>https://my.cmems-du.eu/thredds/wms/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m?service=WMS&version=1.1.1&request=GetMap&layers=ice_conc&bbox=-180,60,180,90&width=512&height=256&srs=EPSG:4326&format=image/png&transparent=true</code>
+        <img src="https://my.cmems-du.eu/thredds/wms/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m?service=WMS&version=1.1.1&request=GetMap&layers=ice_conc&bbox=-180,60,180,90&width=512&height=256&srs=EPSG:4326&format=image/png&transparent=true"
+            alt="Test 3" />
+    </div>
+
+    <div class="test-case">
+        <h3>4. EPSG:3857 Test</h3>
+        <code>https://nrt.cmems-du.eu/thredds/wms/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m?service=WMS&version=1.1.1&request=GetMap&layers=ice_conc&bbox=-20037508.34,7000000,20037508.34,20037508.34&width=512&height=256&srs=EPSG:3857&format=image/png&transparent=true</code>
+        <img src="https://nrt.cmems-du.eu/thredds/wms/SEAICE_GLO_SEAICE_L4_NRT_OBSERVATIONS_011_001/osisaf_obs-si_glo_phy-sic-north_nrt_amsr2_l4_P1D-m?service=WMS&version=1.1.1&request=GetMap&layers=ice_conc&bbox=-20037508.34,7000000,20037508.34,20037508.34&width=512&height=256&srs=EPSG:3857&format=image/png&transparent=true"
+            alt="Test 4" />
+    </div>
+</body>
+
+</html>

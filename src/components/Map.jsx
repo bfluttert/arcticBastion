@@ -5,6 +5,7 @@ import LayerManager, { LAYER_GROUPS, THEATRES } from '../services/LayerManager';
 
 // Arctic Circle Data
 import arcticCircleData from '../data/arctic_circle.json';
+import SeaIceLayer from './SeaIceLayer';
 
 const Map = ({ activeTheatre, missileTrajectories = [] }) => {
     const mapContainer = useRef(null);
@@ -79,15 +80,32 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                     tileSize: 256
                 });
                 map.current.setTerrain({ source: 'terrain', exaggeration: 1.5 });
-            } catch (err) {
-                 console.warn("Terrain source failed", err);
-            }
             */
         });
 
         // Dedicated handler for Layers - waits for style to be ready
         map.current.on('style.load', async () => {
             console.log("Style loaded - Initializing LayerManager...");
+            const layers = map.current.getStyle().layers;
+            console.log("All Layers:", layers.map(l => l.id));
+            console.log("Water Layers:", layers.filter(l => l.id.includes('water')).map(l => l.id));
+
+            // Initialize Terrain Source (AWS Terrarium)
+            try {
+                if (!map.current.getSource('terrain-source')) {
+                    map.current.addSource('terrain-source', {
+                        type: 'raster-dem',
+                        url: null,
+                        tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
+                        encoding: 'terrarium',
+                        tileSize: 256,
+                        maxzoom: 15
+                    });
+                    console.log("Added terrain-source (AWS Terrarium)");
+                }
+            } catch (err) {
+                console.warn("Failed to add terrain source during style.load", err);
+            }
 
             // Arctic Circle Layer (Permanent)
             if (!map.current.getSource('arctic_circle')) {
@@ -388,6 +406,7 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                             }
                         });
 
+<<<<<<< HEAD
                         // Add Labels for Strategic Lines
                         map.current.addLayer({
                             id: `${layer.id}-label`,
@@ -407,6 +426,41 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                                 'text-opacity': 0.9,
                                 'text-halo-color': '#000',
                                 'text-halo-width': 1.5
+=======
+                        // Add labels for shipping routes
+                        if (layer.id === 'shipping_routes') {
+                            map.current.addLayer({
+                                id: `${layer.id}-label`,
+                                type: 'symbol',
+                                source: layer.id,
+                                layout: {
+                                    'symbol-placement': 'line',
+                                    'text-field': ['get', 'Name'],
+                                    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+                                    'text-size': 12,
+                                    'text-max-angle': 30,
+                                    'text-allow-overlap': false
+                                },
+                                paint: {
+                                    'text-color': '#ffaa00',
+                                    'text-halo-color': '#000',
+                                    'text-halo-width': 2
+                                }
+                            });
+                        }
+                    } else if (layer.type === 'hillshade') {
+                        map.current.addLayer({
+                            id: layer.id,
+                            type: 'hillshade',
+                            source: 'terrain-source', // Uses the shared source
+                            paint: {
+                                'hillshade-exaggeration': 1.0,
+                                'hillshade-shadow-color': '#000000',
+                                'hillshade-highlight-color': '#FFFFFF',
+                                'hillshade-accent-color': '#000000',
+                                'hillshade-illumination-direction': 335,
+                                'hillshade-illumination-anchor': 'viewport'
+>>>>>>> 86e0fc8 (feat: hillshade, seaice layer tryout, shipping lanes)
                             }
                         });
                     }
@@ -564,6 +618,7 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                     <div className="animate-pulse">Loading Arctic Intel...</div>
                 </div>
             )}
+            <SeaIceLayer map={map.current} isVisible={activeTheatre === THEATRES.MARITIME} />
         </div>
     );
 
