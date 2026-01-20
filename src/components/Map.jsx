@@ -6,7 +6,7 @@ import LayerManager, { LAYER_GROUPS, THEATRES } from '../services/LayerManager';
 // Arctic Circle Data
 import arcticCircleData from '../data/arctic_circle.json';
 
-const Map = ({ activeTheatre }) => {
+const Map = ({ activeTheatre, missileTrajectories = [] }) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const layerManager = useRef(null);
@@ -127,6 +127,110 @@ const Map = ({ activeTheatre }) => {
                         'text-halo-width': 1
                     }
                 });
+            }
+
+            // Missile Trajectories Source
+            if (!map.current.getSource('missile_trajectories')) {
+                map.current.addSource('missile_trajectories', {
+                    type: 'geojson',
+                    data: { type: 'FeatureCollection', features: [] }
+                });
+
+                // The "Shadow" line (Flat on the surface)
+                map.current.addLayer({
+                    id: 'missile_shadow',
+                    type: 'line',
+                    source: 'missile_trajectories',
+                    paint: {
+                        'line-color': '#000',
+                        'line-width': 1.5,
+                        'line-opacity': 0.3,
+                        'line-dasharray': [2, 2]
+                    }
+                });
+
+                // The "Heat" under-glow
+                map.current.addLayer({
+                    id: 'missile_heat',
+                    type: 'line',
+                    source: 'missile_trajectories',
+                    paint: {
+                        'line-color': '#ff4400',
+                        'line-width': 12,
+                        'line-blur': 15,
+                        'line-opacity': 0.6
+                    }
+                });
+
+                // The primary projectile line (Brighter, simulate height)
+                map.current.addLayer({
+                    id: 'missile_line',
+                    type: 'line',
+                    source: 'missile_trajectories',
+                    layout: {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    paint: {
+                        'line-color': '#ff0000',
+                        'line-width': 5,
+                        'line-blur': 0,
+                        'line-opacity': 1,
+                        'line-gradient': [
+                            'interpolate',
+                            ['linear'],
+                            ['line-progress'],
+                            0, 'rgba(255, 0, 0, 0.5)',
+                            0.1, 'rgba(255, 80, 80, 1)',
+                            0.5, 'rgba(255, 150, 150, 1)',
+                            0.9, 'rgba(255, 80, 80, 1)',
+                            1, 'rgba(255, 0, 0, 0.5)'
+                        ]
+                    }
+                });
+
+                // The Neon Core (Thin white highlight)
+                map.current.addLayer({
+                    id: 'missile_core',
+                    type: 'line',
+                    source: 'missile_trajectories',
+                    layout: {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    paint: {
+                        'line-color': '#ffffff',
+                        'line-width': 1.5,
+                        'line-opacity': 0.8
+                    }
+                });
+
+                // Add a source for the animated projectiles
+                if (!map.current.getSource('missile_projectiles')) {
+                    map.current.addSource('missile_projectiles', {
+                        type: 'geojson',
+                        data: { type: 'FeatureCollection', features: [] }
+                    });
+
+                    map.current.addLayer({
+                        id: 'missile_points',
+                        type: 'circle',
+                        source: 'missile_projectiles',
+                        paint: {
+                            'circle-radius': [
+                                'interpolate', ['linear'], ['get', 'progress_sine'],
+                                0, 2,
+                                0.5, 6,
+                                1, 2
+                            ],
+                            'circle-color': '#fff',
+                            'circle-opacity': 0.8,
+                            'circle-stroke-width': 2,
+                            'circle-stroke-color': '#ffcc00',
+                            'circle-blur': 0.5
+                        }
+                    });
+                }
             }
 
             // Load Custom Icons
@@ -283,6 +387,28 @@ const Map = ({ activeTheatre }) => {
                                 'line-dasharray': [2, 2]
                             }
                         });
+
+                        // Add Labels for Strategic Lines
+                        map.current.addLayer({
+                            id: `${layer.id}-label`,
+                            type: 'symbol',
+                            source: layer.id,
+                            layout: {
+                                'symbol-placement': 'line',
+                                'text-field': ['get', 'name'],
+                                'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+                                'text-size': 11,
+                                'text-letter-spacing': 0.1,
+                                'text-max-angle': 30,
+                                'text-padding': 10
+                            },
+                            paint: {
+                                'text-color': layer.color,
+                                'text-opacity': 0.9,
+                                'text-halo-color': '#000',
+                                'text-halo-width': 1.5
+                            }
+                        });
                     }
                 });
 
@@ -361,8 +487,74 @@ const Map = ({ activeTheatre }) => {
     useEffect(() => {
         if (isLoaded && layerManager.current) {
             layerManager.current.setTheatre(activeTheatre);
+
+            // Ensure missile simulation layers are only visible in STRATEGIC theatre
+            const missileLayerIds = ['missile_shadow', 'missile_heat', 'missile_line', 'missile_core', 'missile_points'];
+            const visibility = activeTheatre === THEATRES.STRATEGIC ? 'visible' : 'none';
+
+            missileLayerIds.forEach(id => {
+                if (map.current.getLayer(id)) {
+                    map.current.setLayoutProperty(id, 'visibility', visibility);
+                }
+            });
         }
     }, [activeTheatre, isLoaded]);
+
+    // React to missile trajectories
+    useEffect(() => {
+        if (isLoaded && map.current && map.current.getSource('missile_trajectories')) {
+            map.current.getSource('missile_trajectories').setData({
+                type: 'FeatureCollection',
+                features: missileTrajectories
+            });
+
+            // Start animation for projectiles
+            if (missileTrajectories.length > 0) {
+                let start = null;
+                const duration = 5000; // 5 seconds for full flight
+
+                const animate = (timestamp) => {
+                    if (!start) start = timestamp;
+                    const progress = (timestamp - start) / duration;
+
+                    if (progress <= 1) {
+                        const projectileFeatures = missileTrajectories.map(f => {
+                            const coords = f.geometry.coordinates;
+                            const index = Math.floor(Math.min(progress, 0.99) * coords.length);
+                            const point = coords[index];
+
+                            // Progress sine for scaling (0 at ends, 1 at middle)
+                            const progress_sine = Math.sin(progress * Math.PI);
+
+                            return {
+                                type: 'Feature',
+                                geometry: { type: 'Point', coordinates: point },
+                                properties: { progress_sine }
+                            };
+                        });
+
+                        if (map.current.getSource('missile_projectiles')) {
+                            map.current.getSource('missile_projectiles').setData({
+                                type: 'FeatureCollection',
+                                features: projectileFeatures
+                            });
+                        }
+                        requestAnimationFrame(animate);
+                    } else {
+                        // Reset or leave at targets? Let's clear projectiles when done
+                        if (map.current.getSource('missile_projectiles')) {
+                            map.current.getSource('missile_projectiles').setData({
+                                type: 'FeatureCollection',
+                                features: []
+                            });
+                        }
+                    }
+                };
+
+                requestAnimationFrame(animate);
+            }
+        }
+    }, [missileTrajectories, isLoaded]);
 
     return (
         <div className="w-full h-full relative" style={{ height: '100vh', width: '100%' }}>

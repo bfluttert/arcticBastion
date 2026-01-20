@@ -15,13 +15,15 @@ export const LAYER_GROUPS = {
     ],
     [THEATRES.STRATEGIC]: [
         { id: 'bases', name: 'Military Bases', type: 'symbol', color: '#ff2a6d' },
-        { id: 'giuk', name: 'GIUK Gap', type: 'line', color: '#ff2a6d' },
-        { id: 'bastion', name: 'Russian Bastion', type: 'line', color: '#ff2a6d' }
+        { id: 'giuk', name: 'GIUK Gap', type: 'line', color: '#3388ff' },
+        { id: 'bastion', name: 'Bear Gap', type: 'line', color: '#ff3333' }
     ],
     [THEATRES.MARITIME]: [
         { id: 'ais', name: 'Live Shipping (AIS)', type: 'circle', color: '#00ff00' },
         { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' },
-        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#00f3ff' }
+        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#698b8dff' },
+        { id: 'giuk', name: 'GIUK Gap', type: 'line', color: '#3388ff' },
+        { id: 'bastion', name: 'Bear Gap', type: 'line', color: '#ff3333' }
     ]
 };
 
@@ -151,6 +153,11 @@ class LayerManager {
             if (this.map.getLayer(layer.id)) {
                 this.map.setLayoutProperty(layer.id, 'visibility', 'none');
             }
+            // Also hide labels
+            const labelId = `${layer.id}-label`;
+            if (this.map.getLayer(labelId)) {
+                this.map.setLayoutProperty(labelId, 'visibility', 'none');
+            }
         });
 
         // Enable layers for the active theatre
@@ -158,6 +165,11 @@ class LayerManager {
         theatreLayers.forEach(layer => {
             if (this.map.getLayer(layer.id)) {
                 this.map.setLayoutProperty(layer.id, 'visibility', 'visible');
+            }
+            // Also show labels if they exist
+            const labelId = `${layer.id}-label`;
+            if (this.map.getLayer(labelId)) {
+                this.map.setLayoutProperty(labelId, 'visibility', 'visible');
             }
         });
 
