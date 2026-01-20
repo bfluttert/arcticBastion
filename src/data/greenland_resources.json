@@ -1,0 +1,157 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kvanefjeld (Kuannersuit)",
+                "country": "Greenland",
+                "type": "Rare Earth Elements",
+                "material": "REE, Uranium, Zinc",
+                "status": "Exploration",
+                "description": "One of the world's largest undeveloped deposits of rare earth elements and uranium.",
+                "source": "Greenland Minerals Ltd"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -46.00,
+                    60.98
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kringlerne (Killavaat Alannguat)",
+                "country": "Greenland",
+                "type": "Rare Earth Elements",
+                "material": "Tantalum, Niobium, REE",
+                "status": "Exploration",
+                "description": "Significant polymetallic deposit focused on speciality metals.",
+                "source": "Tanbreez"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -45.50,
+                    60.75
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Citronen Fjord",
+                "country": "Greenland",
+                "type": "Base Metals",
+                "material": "Zinc, Lead",
+                "status": "Exploitation License",
+                "description": "Major zinc-lead deposit in Northern Greenland.",
+                "source": "Ironbark Zinc"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -28.33,
+                    83.09
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Isua",
+                "country": "Greenland",
+                "type": "Iron",
+                "material": "Iron Ore",
+                "status": "Production (Historic)",
+                "description": "The Isua Greenstone Belt hosts one of the oldest known iron ore deposits.",
+                "source": "General Mining"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -50.00,
+                    65.17
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Dundas (Moriussaq)",
+                "country": "Greenland",
+                "type": "Titanium",
+                "material": "Ilmenite",
+                "status": "Exploitation License",
+                "description": "High-grade ilmenite (titanium) sand deposit.",
+                "source": "Bluejay Mining"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -68.90,
+                    76.53
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Aappaluttoq",
+                "country": "Greenland",
+                "type": "Gemstones",
+                "material": "Ruby, Pink Sapphire",
+                "status": "Production",
+                "description": "Operating ruby mine in Southwest Greenland.",
+                "source": "Greenland Ruby"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -50.32,
+                    63.02
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Malmbjerg",
+                "country": "Greenland",
+                "type": "Specialty Metals",
+                "material": "Molybdenum",
+                "status": "Exploration",
+                "description": "Large porphyry molybdenum deposit.",
+                "source": "Greenland Resources"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -24.16,
+                    71.91
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Maarmorilik (Black Angel)",
+                "country": "Greenland",
+                "type": "Base Metals",
+                "material": "Zinc, Lead, Silver",
+                "status": "Past Producer",
+                "description": "Historic high-grade zinc-lead mine.",
+                "source": "Angel Mining"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -51.25,
+                    71.18
+                ]
+            }
+        }
+    ]
+}

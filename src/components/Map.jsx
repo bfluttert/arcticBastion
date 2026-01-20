@@ -406,48 +406,28 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                             }
                         });
 
-<<<<<<< HEAD
-                        // Add Labels for Strategic Lines
+                        // Add Labels for Lines (Merged Strategy)
+                        const isShipping = layer.id === 'shipping_routes';
                         map.current.addLayer({
                             id: `${layer.id}-label`,
                             type: 'symbol',
                             source: layer.id,
                             layout: {
                                 'symbol-placement': 'line',
-                                'text-field': ['get', 'name'],
+                                'text-field': isShipping ? ['get', 'Name'] : ['get', 'name'],
                                 'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-                                'text-size': 11,
+                                'text-size': isShipping ? 12 : 11,
                                 'text-letter-spacing': 0.1,
                                 'text-max-angle': 30,
                                 'text-padding': 10
                             },
                             paint: {
-                                'text-color': layer.color,
+                                'text-color': isShipping ? '#ffaa00' : layer.color,
                                 'text-opacity': 0.9,
                                 'text-halo-color': '#000',
                                 'text-halo-width': 1.5
-=======
-                        // Add labels for shipping routes
-                        if (layer.id === 'shipping_routes') {
-                            map.current.addLayer({
-                                id: `${layer.id}-label`,
-                                type: 'symbol',
-                                source: layer.id,
-                                layout: {
-                                    'symbol-placement': 'line',
-                                    'text-field': ['get', 'Name'],
-                                    'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-                                    'text-size': 12,
-                                    'text-max-angle': 30,
-                                    'text-allow-overlap': false
-                                },
-                                paint: {
-                                    'text-color': '#ffaa00',
-                                    'text-halo-color': '#000',
-                                    'text-halo-width': 2
-                                }
-                            });
-                        }
+                            }
+                        });
                     } else if (layer.type === 'hillshade') {
                         map.current.addLayer({
                             id: layer.id,
@@ -460,7 +440,6 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                                 'hillshade-accent-color': '#000000',
                                 'hillshade-illumination-direction': 335,
                                 'hillshade-illumination-anchor': 'viewport'
->>>>>>> 86e0fc8 (feat: hillshade, seaice layer tryout, shipping lanes)
                             }
                         });
                     }

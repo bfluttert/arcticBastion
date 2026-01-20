@@ -12,6 +12,7 @@ export const THEATRES = {
 export const LAYER_GROUPS = {
     [THEATRES.RESOURCE]: [
         { id: 'mines', name: 'Strategic Mines', type: 'circle', color: '#ffd700' },
+        { id: 'greenland_resources', name: 'Greenland Critical Minerals', type: 'circle', color: '#9d4edd' },
         { id: 'relief', name: 'Global Relief', type: 'hillshade' }
     ],
     [THEATRES.STRATEGIC]: [
@@ -23,7 +24,13 @@ export const LAYER_GROUPS = {
         { id: 'ais', name: 'Live Shipping (AIS)', type: 'circle', color: '#00ff00' },
         { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' },
         { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#56878aff' },
+<<<<<<< HEAD
         { id: 'shipping_routes', name: 'Arctic Shipping Routes', type: 'line', color: '#ffaa00' }
+=======
+        { id: 'shipping_routes', name: 'Arctic Shipping Routes', type: 'line', color: '#ffaa00' },
+        { id: 'giuk', name: 'GIUK Gap', type: 'line', color: '#3388ff' },
+        { id: 'bastion', name: 'Bear Gap', type: 'line', color: '#ff3333' }
+>>>>>>> a0c6902 (feat: resources, ice layers)
     ]
 };
 
@@ -50,6 +57,10 @@ class LayerManager {
         try {
             const minesData = await import('../data/mines.json');
             this.updateSource('mines', minesData.default || minesData);
+
+            // Load Greenland Resources
+            const greenlandData = await import('../data/greenland_resources.json');
+            this.updateSource('greenland_resources', greenlandData.default || greenlandData);
 
             // Load the new expanded military bases data
             const militaryBases = await import('../data/militarybases.json');

@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "d3-geo": "^3.1.1",
+    "d3-scale": "^4.0.2",
+    "d3-selection": "^3.0.0",
     "lucide-react": "^0.562.0",
     "maplibre-gl": "^5.15.0",
     "react": "^19.2.0",
