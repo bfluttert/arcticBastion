@@ -23,7 +23,7 @@ export const LAYER_GROUPS = {
     [THEATRES.MARITIME]: [
         { id: 'ais', name: 'Live Shipping (AIS)', type: 'circle', color: '#00ff00' },
         { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' },
-        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#56878aff' },
+        { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#4a7072ff' },
         { id: 'shipping_routes', name: 'Arctic Shipping Routes', type: 'line', color: '#ffaa00' }
     ]
 };
@@ -183,22 +183,25 @@ class LayerManager {
                 this.map.setLayoutProperty(labelLayerId, 'visibility', 'visible');
             }
         });
+        // Note: AIS is now controlled via toggleAIS() method, not automatically by theatre switch
+    }
 
-        // Manage AIS Tracker
-        if (theatre === THEATRES.MARITIME) {
+    // Explicit AIS toggle control (independent of theatre)
+    async toggleAIS(enabled, filters = {}) {
+        if (enabled) {
             if (!this.aisTracker) {
-                // Dynamic import to avoid circular dependencies if any, or just keeping it clean
-                import('./AISTracker').then(module => {
-                    const AISTracker = module.default; // Adjusted for default export
-                    this.aisTracker = new AISTracker(this.map, 'ais');
-                    this.aisTracker.start();
-                });
-            } else {
-                this.aisTracker.start();
+                const module = await import('./AISTracker');
+                const AISTracker = module.default;
+                this.aisTracker = new AISTracker(this.map, 'ais');
             }
+            // Update filters and start
+            this.aisTracker.setFilters(filters);
+            this.aisTracker.start();
+            console.log('AIS Tracker: Started with filters', filters);
         } else {
             if (this.aisTracker) {
                 this.aisTracker.stop();
+                console.log('AIS Tracker: Stopped');
             }
         }
     }

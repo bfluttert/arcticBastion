@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layers, Anchor, Zap, Shield, Menu, Info, ChevronRight, ChevronLeft, Snowflake } from 'lucide-react';
+import { Layers, Anchor, Zap, Shield, Menu, Info, ChevronRight, ChevronLeft, Snowflake, Radio } from 'lucide-react';
 import Map from './components/Map';
 import IcebreakerOverview from './components/IcebreakerOverview';
 import MissileControl from './components/MissileControl';
@@ -12,6 +12,11 @@ function App() {
   const [isPanelOpen, setIsPanelOpen] = useState(true);
   const [missileTrajectories, setMissileTrajectories] = useState([]);
   const [showSeaIceModal, setShowSeaIceModal] = useState(false);
+  const [isAisEnabled, setIsAisEnabled] = useState(false);
+  const [aisFilters, setAisFilters] = useState({
+    watchlistOnly: true,
+    arcticOnly: true  // 66°N and above
+  });
 
   const handleMissileLaunch = (sources, targets) => {
     const newTrajectories = [];
@@ -33,6 +38,8 @@ function App() {
       <Map
         activeTheatre={activeTheatre}
         missileTrajectories={missileTrajectories}
+        isAisEnabled={isAisEnabled}
+        aisFilters={aisFilters}
       />
 
       {/* Top Bar - Header & Global Status */}
@@ -49,6 +56,60 @@ function App() {
 
         {/* User/Settings (Removed as requested) */}
       </div>
+
+      {/* Left Side - Maritime Controls */}
+      {activeTheatre === THEATRES.MARITIME && (
+        <div className="absolute left-6 top-52 z-20 pointer-events-auto flex flex-col gap-3">
+          <button
+            onClick={() => setShowSeaIceModal(true)}
+            className="glass-panel flex items-center gap-2 px-4 py-3 bg-cyan-500/10 border border-cyan-500/30 rounded-xl text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 group"
+          >
+            <Snowflake className="w-4 h-4 group-hover:animate-pulse" />
+            <span className="font-medium tracking-wide text-sm">VIEW ICE HISTORY</span>
+          </button>
+
+          {/* AIS Toggle Button */}
+          <button
+            onClick={() => setIsAisEnabled(!isAisEnabled)}
+            className={`glass-panel flex items-center gap-2 px-4 py-3 rounded-xl transition-all duration-300 group ${isAisEnabled
+              ? 'bg-green-500/20 border border-green-500/50 text-green-400'
+              : 'bg-slate-500/10 border border-slate-500/30 text-slate-400 hover:bg-slate-500/20'
+              }`}
+          >
+            <Radio className={`w-4 h-4 ${isAisEnabled ? 'animate-pulse' : ''}`} />
+            <span className="font-medium tracking-wide text-sm">
+              {isAisEnabled ? 'AIS LIVE' : 'AIS OFF'}
+            </span>
+          </button>
+
+          {/* AIS Filter Options (shown when AIS is enabled) */}
+          {isAisEnabled && (
+            <div className="glass-panel p-3 rounded-xl border border-green-500/20 space-y-2">
+              <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">Filters</div>
+
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={aisFilters.watchlistOnly}
+                  onChange={(e) => setAisFilters(prev => ({ ...prev, watchlistOnly: e.target.checked }))}
+                  className="w-3 h-3 rounded border-slate-500 bg-slate-800 text-green-500 focus:ring-green-500"
+                />
+                <span className="text-xs text-slate-300 group-hover:text-white">Watchlist Only</span>
+              </label>
+
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={aisFilters.arcticOnly}
+                  onChange={(e) => setAisFilters(prev => ({ ...prev, arcticOnly: e.target.checked }))}
+                  className="w-3 h-3 rounded border-slate-500 bg-slate-800 text-green-500 focus:ring-green-500"
+                />
+                <span className="text-xs text-slate-300 group-hover:text-white">Arctic Only (≥66°N)</span>
+              </label>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Bottom Control Panel - Theatre Switcher */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 pointer-events-auto">
@@ -208,14 +269,13 @@ function App() {
                   </ul>
                 </div>
 
-                {/* Sea Ice History Button */}
-                <button
-                  onClick={() => setShowSeaIceModal(true)}
-                  className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 bg-cyan-500/10 border border-cyan-500/30 rounded-xl text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 group"
-                >
-                  <Snowflake className="w-4 h-4 group-hover:animate-pulse" />
-                  <span className="font-medium tracking-wide text-sm">VIEW ICE HISTORY</span>
-                </button>
+                {/* AIS Coverage Note */}
+                <div className="mt-3 p-2 rounded-lg bg-amber-500/5 border border-amber-500/20">
+                  <div className="text-[9px] font-bold text-amber-400/80 uppercase tracking-wider mb-1">⚠ AIS Coverage</div>
+                  <p className="text-[10px] text-slate-400 leading-relaxed">
+                    AIS stations are coastal-based with ~200km range. Vessels far offshore may not appear.
+                  </p>
+                </div>
               </>
             )}
 

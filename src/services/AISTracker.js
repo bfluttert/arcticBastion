@@ -14,6 +14,12 @@ export default class AISTracker {
         this.ships = new Map(); // Store latest state by MMSI
         this.updateInterval = null;
 
+        // Filter settings (can be updated via setFilters)
+        this.filters = {
+            watchlistOnly: true,
+            arcticOnly: true  // 66°N and above
+        };
+
         // Build MMSI watchlist from vessels.json
         this.watchlistMmsi = new Set();
         vesselRegistry.vessel_registry.forEach(category => {
@@ -24,6 +30,26 @@ export default class AISTracker {
             });
         });
         console.log(`AIS Tracker: Watching ${this.watchlistMmsi.size} vessels from registry`);
+    }
+
+    setFilters(filters) {
+        const oldFilters = { ...this.filters };
+        this.filters = { ...this.filters, ...filters };
+        console.log('AIS Tracker: Filters updated', this.filters);
+
+        // If watchlist filter changed, re-filter existing ships
+        if (oldFilters.watchlistOnly !== this.filters.watchlistOnly) {
+            if (this.filters.watchlistOnly) {
+                // Remove ships not in watchlist
+                for (const [mmsi, ship] of this.ships.entries()) {
+                    if (!this.watchlistMmsi.has(mmsi)) {
+                        this.ships.delete(mmsi);
+                    }
+                }
+            }
+            // Re-render immediately
+            this.render();
+        }
     }
 
     start() {
@@ -55,16 +81,19 @@ export default class AISTracker {
                 console.log("AIS WebSocket Connected. Sending subscription...");
 
                 // Construct subscription message for aisstream.io
+                // Use 66°N (Arctic Circle) as minimum latitude when arcticOnly is enabled
+                const minLat = this.filters.arcticOnly ? 66 : 0;
                 const subscription = {
                     APIKey: token,
                     BoundingBoxes: [
                         [
-                            [60, -180], // Top-Left (Arctic boundary)
-                            [90, 180]   // Bottom-Right
+                            [minLat, -180], // Top-Left (min latitude)
+                            [90, 180]       // Bottom-Right (max latitude = North Pole)
                         ]
                     ],
                     FilterMessageTypes: ["PositionReport", "ShipStaticData"] // Subscribe to both
                 };
+                console.log(`AIS: Subscribing with bounding box ${minLat}°N to 90°N`);
 
                 this.socket.send(JSON.stringify(subscription));
             };
@@ -102,8 +131,10 @@ export default class AISTracker {
                         const meta = response.MetaData;
                         const mmsi = String(report.UserID);
 
-                        // Only process if MMSI is in our watchlist
-                        if (!this.watchlistMmsi.has(mmsi)) return;
+                        // Apply watchlist filter if enabled
+                        if (this.filters.watchlistOnly && !this.watchlistMmsi.has(mmsi)) {
+                            return; // Skip vessels not in watchlist
+                        }
 
                         const existing = this.ships.get(mmsi) || {
                             id: mmsi,
@@ -167,7 +198,7 @@ export default class AISTracker {
     }
 
     render() {
-        if (!this.map.getSource(this.sourceId)) return;
+        if (!this.map || !this.map.getSource(this.sourceId)) return;
 
         // Convert Map values to GeoJSON features
         const features = Array.from(this.ships.values()).map(ship => ({
@@ -191,7 +222,10 @@ export default class AISTracker {
             features
         };
 
-        this.map.getSource(this.sourceId).setData(geojson);
+        const source = this.map.getSource(this.sourceId);
+        if (source) {
+            source.setData(geojson);
+        }
     }
 
     stop() {
@@ -202,6 +236,14 @@ export default class AISTracker {
         if (this.updateInterval) {
             clearInterval(this.updateInterval);
             this.updateInterval = null;
+        }
+        // Clear ships from memory and map
+        this.ships.clear();
+        if (this.map) {
+            const source = this.map.getSource(this.sourceId);
+            if (source) {
+                source.setData({ type: 'FeatureCollection', features: [] });
+            }
         }
     }
 }

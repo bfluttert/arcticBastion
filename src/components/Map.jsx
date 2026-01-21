@@ -7,7 +7,7 @@ import LayerManager, { LAYER_GROUPS, THEATRES } from '../services/LayerManager';
 import arcticCircleData from '../data/arctic_circle.json';
 import SeaIceLayer from './SeaIceLayer';
 
-const Map = ({ activeTheatre, missileTrajectories = [] }) => {
+const Map = ({ activeTheatre, missileTrajectories = [], isAisEnabled = false, aisFilters = {} }) => {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const layerManager = useRef(null);
@@ -537,6 +537,16 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
         }
     }, [activeTheatre, isLoaded]);
 
+    // React to AIS toggle
+    useEffect(() => {
+        if (isLoaded && layerManager.current) {
+            layerManager.current.toggleAIS(
+                isAisEnabled && activeTheatre === THEATRES.MARITIME,
+                aisFilters
+            );
+        }
+    }, [isAisEnabled, activeTheatre, isLoaded, aisFilters]);
+
     // React to missile trajectories
     useEffect(() => {
         if (isLoaded && map.current && map.current.getSource('missile_trajectories')) {
@@ -601,7 +611,6 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                     <div className="animate-pulse">Loading Arctic Intel...</div>
                 </div>
             )}
-            <SeaIceLayer map={map.current} isVisible={activeTheatre === THEATRES.MARITIME} />
         </div>
     );
 
