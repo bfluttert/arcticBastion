@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Layers, Anchor, Zap, Shield, Menu, Info, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Layers, Anchor, Zap, Shield, Menu, Info, ChevronRight, ChevronLeft, Snowflake } from 'lucide-react';
 import Map from './components/Map';
 import IcebreakerOverview from './components/IcebreakerOverview';
 import MissileControl from './components/MissileControl';
 import MissileSimulator from './services/MissileSimulator';
+import SeaIceModal from './components/SeaIceModal';
 import { THEATRES } from './services/LayerManager';
 
 function App() {
   const [activeTheatre, setActiveTheatre] = useState(THEATRES.RESOURCE);
   const [isPanelOpen, setIsPanelOpen] = useState(true);
   const [missileTrajectories, setMissileTrajectories] = useState([]);
+  const [showSeaIceModal, setShowSeaIceModal] = useState(false);
 
   const handleMissileLaunch = (sources, targets) => {
     const newTrajectories = [];
@@ -205,6 +207,15 @@ function App() {
                     <li><span className="text-slate-200 font-medium">Ice Cap Dynamics:</span> Visualizing the shifting ice extent and its impact on navigation.</li>
                   </ul>
                 </div>
+
+                {/* Sea Ice History Button */}
+                <button
+                  onClick={() => setShowSeaIceModal(true)}
+                  className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-3 bg-cyan-500/10 border border-cyan-500/30 rounded-xl text-cyan-400 hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 group"
+                >
+                  <Snowflake className="w-4 h-4 group-hover:animate-pulse" />
+                  <span className="font-medium tracking-wide text-sm">VIEW ICE HISTORY</span>
+                </button>
               </>
             )}
 
@@ -223,6 +234,9 @@ function App() {
 
       {/* Overlays */}
       {activeTheatre === THEATRES.MARITIME && <IcebreakerOverview />}
+      {activeTheatre === THEATRES.MARITIME && (
+        <SeaIceModal isOpen={showSeaIceModal} onClose={() => setShowSeaIceModal(false)} />
+      )}
       {activeTheatre === THEATRES.STRATEGIC && (
         <MissileControl
           onLaunch={handleMissileLaunch}

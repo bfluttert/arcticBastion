@@ -429,6 +429,10 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                             }
                         });
                     } else if (layer.type === 'hillshade') {
+                        // Find the first water layer to insert hillshade below it
+                        const styleLayers = map.current.getStyle().layers;
+                        const waterLayer = styleLayers.find(l => l.id.includes('water'));
+
                         map.current.addLayer({
                             id: layer.id,
                             type: 'hillshade',
@@ -441,7 +445,7 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                                 'hillshade-illumination-direction': 335,
                                 'hillshade-illumination-anchor': 'viewport'
                             }
-                        });
+                        }, waterLayer?.id); // Insert below water layer
                     }
                 });
 
@@ -451,7 +455,7 @@ const Map = ({ activeTheatre, missileTrajectories = [] }) => {
                 }
 
                 // Keep interactive handlers...
-                const interactiveLayers = ['ais', 'bases', 'mines'];
+                const interactiveLayers = ['ais', 'bases', 'mines', 'greenland_resources'];
 
                 // Cursor pointers
                 map.current.on('mouseenter', interactiveLayers, () => {
