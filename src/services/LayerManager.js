@@ -24,13 +24,7 @@ export const LAYER_GROUPS = {
         { id: 'ais', name: 'Live Shipping (AIS)', type: 'circle', color: '#00ff00' },
         { id: 'ice', name: 'Ice Extent', type: 'fill', color: '#ffffff' },
         { id: 'eez', name: 'EEZ Boundaries', type: 'line', color: '#56878aff' },
-<<<<<<< HEAD
         { id: 'shipping_routes', name: 'Arctic Shipping Routes', type: 'line', color: '#ffaa00' }
-=======
-        { id: 'shipping_routes', name: 'Arctic Shipping Routes', type: 'line', color: '#ffaa00' },
-        { id: 'giuk', name: 'GIUK Gap', type: 'line', color: '#3388ff' },
-        { id: 'bastion', name: 'Bear Gap', type: 'line', color: '#ff3333' }
->>>>>>> a0c6902 (feat: resources, ice layers)
     ]
 };
 
